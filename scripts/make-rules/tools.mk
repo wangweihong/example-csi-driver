@@ -109,3 +109,7 @@ install.deepcopy-gen:
 install.go-gitlint:
 #	@$(GO) install github.com/llorllale/go-gitlint@lateset
 	@$(GO) get github.com/llorllale/go-gitlint
+
+.PHONY: install.kustomize
+install.kustomize:
+	@$(GO) install sigs.k8s.io/kustomize/kustomize/v4@v4.5.7

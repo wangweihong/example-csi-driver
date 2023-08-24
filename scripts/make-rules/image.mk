@@ -58,6 +58,7 @@ image.build.%: go.build.%
 	$(eval IMAGE := $(COMMAND))
 	$(eval IMAGE_PLAT := $(subst _,/,$(PLATFORM)))
 	$(eval OS := $(word 1,$(subst _, ,$(PLATFORM))))
+	# windows平台程序编译后带.exe后缀
 	$(if $(filter windows,$(OS)),$(eval GO_OUT_EXT := .exe),$(eval GO_OUT_EXT := ))
 	@echo "===========> Building docker image $(IMAGE) $(VERSION) for $(IMAGE_PLAT)"
 	@mkdir -p $(TMP_DIR)/$(IMAGE)

@@ -20,6 +20,8 @@ include scripts/make-rules/dependencies.mk
 include scripts/make-rules/swagger.mk
 include scripts/make-rules/proto.mk
 include scripts/make-rules/certs.mk
+include scripts/make-rules/template.mk
+
 
 # Usage
 

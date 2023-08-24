@@ -1,0 +1,37 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: example
+  annotations:
+    storageclass.kubernetes.io/is-default-class: 'true'
+provisioner: example.eazycloud.io
+parameters:
+# example, cluster administrators need change according to product
+#csi.storage.k8s.io/node-stage-secret-name: example-csi-secret
+#csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+#csi.storage.k8s.io/provisioner-secret-name: example-csi-secret
+#csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+#example-volume-attr/ChecksumData: 'off'
+#example-volume-attr/ChecksumHeader: 'off'
+#example-volume-attr/ComponentSetShift: '0'
+#example-volume-attr/ComponentShift: '30'
+#example-volume-attr/DataType: replica
+#example-volume-attr/DevType: target
+#example-volume-attr/DriveType: SSD
+#example-volume-attr/Encrypto: 'off'
+#example-volume-attr/ReadBytesLimit: '0'
+#example-volume-attr/ReadIOPSLimit: ''
+#example-volume-attr/Safety: first
+#example-volume-attr/ScheduleOption: intelligent
+#example-volume-attr/Sector: '512'
+#example-volume-attr/StripeShift: '20'
+#example-volume-attr/TargetACL: ALL
+#example-volume-attr/ThinProvision: 'on'
+#example-volume-attr/VmCache: none
+#example-volume-attr/VsdVendor: LIBTARGET
+#example-volume-attr/WriteBytesLimit: '0'
+#example-volume-attr/WriteIOPSLimit: ''
+#example-volume-attr/Zone: 1cfe9f6a-ca30-4c75-b8f4-ca0f148343ff
+#example-volume-attr/replica: '1'
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

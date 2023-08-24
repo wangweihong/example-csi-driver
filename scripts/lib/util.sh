@@ -11,3 +11,15 @@ function lib::util::test_openssl_installed {
 
     OPENSSL_BIN=$(command -v openssl)
 }
+
+# Test whether kustomize is installed.
+# Sets:
+#  KUSTOMIZE_BIN: The path to the kustomize binary to use
+function lib::util::test_kustomize_installed {
+    if ! kustomize version >& /dev/null; then
+      echo "Failed to run kustomize. Please ensure kustomize is installed"
+      exit 1
+    fi
+
+    KUSTOMIZE_BIN=$(command -v kustomize)
+}

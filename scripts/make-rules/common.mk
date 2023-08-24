@@ -100,7 +100,7 @@ endif
 BLOCKER_TOOLS ?= gsemver golines go-junit-report golangci-lint goimports codegen deepcopy-gen
 CRITICAL_TOOLS ?= swagger mockgen gotests git-chglog  go-mod-outdated protoc-gen-go protoc go-gitlint
 # 可选工具集，缺少不影响
-TRIVIAL_TOOLS ?= depth go-callvis  richgo rts kube-score  grpcurl
+TRIVIAL_TOOLS ?= depth go-callvis  richgo rts kube-score  grpcurl kustomize
 
 COMMA := ,
 EMPTY :=

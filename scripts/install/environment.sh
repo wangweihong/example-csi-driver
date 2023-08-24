@@ -30,3 +30,10 @@ readonly CA_FILE=${CA_FILE:-${EAZYCLOUD_CONFIG_DIR}/cert/ca.pem} # ca
 readonly EXAMPLE_GRPC_RUNTIME_DEBUG_OUTPUT_DIR=${EXAMPLE_GRPC_RUNTIME_DEBUG_OUTPUT_DIR:-${EAZYCLOUD_DEBUG_DIR}/example-csi-driver}
 readonly EXAMPLE_CSI_DRIVER_UNIX_SOCKET=${EXAMPLE_CSI_DRIVER_UNIX_SOCKET:-/var/lib/kubelet/plugins/example-csi-driver/csi.sock}
 
+# 运行时依赖镜像
+readonly DEPLOYMENT_CSI_RESIZE_IMAGE=${DEPLOYMENT_CSI_RESIZE_IMAGE:"quay.io/k8scsi/csi-resizer:v0.5.0"}
+readonly DEPLOYMENT_CSI_SNAPSHOTTER_IMAGE=${DEPLOYMENT_CSI_RESIZE_IMAGE:"quay.io/k8scsi/csi-snapshotter:v3.0.3"}
+readonly DEPLOYMENT_CSI_SNAPSHOT_CONTROLLER_IMAGE=${DEPLOYMENT_CSI_RESIZE_IMAGE:"quay.io/k8scsi/snapshot-controller:v3.0.3"}
+readonly DEPLOYMENT_CSI_PROVISIONER_IMAGE=${DEPLOYMENT_CSI_PROVISIONER_IMAGE:"quay.io/k8scsi/csi-provisioner:v2.1.0"}
+readonly DEPLOYMENT_CSI_ATTACHER_IMAGE=${DEPLOYMENT_CSI_ATTACHER_IMAGE:"quay.io/k8scsi/csi-attacher:v1.2.1"}
+readonly DEPLOYMENT_CSI_NODE_REGISTRAR_IMAGE=${DEPLOYMENT_CSI_NODE_REGISTRAR_IMAGE:"quay.io/k8scsi/csi-node-driver-registrar:v1.2.0"}

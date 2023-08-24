@@ -1,0 +1,109 @@
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: example-csi-node
+  namespace: storage
+spec:
+  selector:
+    matchLabels:
+      app: example-csi-node
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: example-csi-node
+    spec:
+      volumes:
+        - name: plugin-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/csi.example.io
+            type: DirectoryOrCreate
+        - name: registration-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins_registry
+            type: Directory
+        - name: pods-dir
+          hostPath:
+            path: /var/lib/kubelet
+            type: Directory
+        - name: etc-dir
+          hostPath:
+            path: /etc
+            type: Directory
+        - name: dev-dir
+          hostPath:
+            path: /dev
+            type: Directory
+        - name: iscsi-dir
+          hostPath:
+            path: /var/lib/iscsi
+            type: DirectoryOrCreate
+        - name: log-dir
+          hostPath:
+            path: /var/log/
+            type: Directory
+        - name: config-map
+          configMap:
+            name: example-csi-configmap
+            defaultMode: 420
+      containers:
+        - name: csi-node-driver-registrar
+          image: ${DEPLOYMENT_CSI_NODE_REGISTRAR_IMAGE}
+          args:
+            - '--csi-address=/csi/csi.sock'
+            - >-
+              --kubelet-registration-path=/var/lib/kubelet/plugins/csi.example.io/csi.sock
+          resources: {}
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: registration-dir
+              mountPath: /registration
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+        - name: example-csi-driver
+          image: '10.30.12.169/k8s.gcr.io/csi-example-driver:v1.0.0'
+          args:
+            - '--endpoint=/csi/csi.sock'
+            - '-v=3'
+          resources: {}
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-dir
+              mountPath: /var/lib/kubelet
+              mountPropagation: Bidirectional
+            - name: etc-dir
+              mountPath: /etc
+            - name: log-dir
+              mountPath: /var/log
+            - name: dev-dir
+              mountPath: /dev
+              mountPropagation: HostToContainer
+            - name: iscsi-dir
+              mountPath: /var/lib/iscsi
+            - name: config-map
+              mountPath: /etc/example
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - '-c'
+                  - rm -f /csi/csi.sock
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+            privileged: true
+            allowPrivilegeEscalation: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: example-csi-node
+      serviceAccount: example-csi-node
+      hostNetwork: true

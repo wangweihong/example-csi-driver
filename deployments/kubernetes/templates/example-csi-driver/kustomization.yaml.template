@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- example-csi-driver-configmap.yaml
+- example-csi-driver-controller-deployment.yaml
+- example-csi-driver-node-daemonset.yaml
+- example-csi-driver-rbac.yaml
+- example-csi-driver-secret.yaml
+- example-csi-driver-storageclass.yaml
+- example-csi-volumesnapshotclass.yaml
+
+namespace: {{.Namespace}}
+images:
+- name: eazycloud.io/component/csi-example-driver
+  newName: {{.ImageRepository}}eazycloud.io/component/csi-example-driver
+- name: quay.io/k8scsi/csi-provisioner
+  newName: {{.ImageRepository}}quay.io/k8scsi/csi-provisioner
+- name: quay.io/k8scsi/csi-attacher
+  newName: {{.ImageRepository}}quay.io/k8scsi/csi-attacher
+- name: quay.io/k8scsi/csi-node-driver-registrar
+  newName: {{.ImageRepository}}quay.io/k8scsi/csi-node-driver-registrar
+- name: quay.io/k8scsi/csi-resizer
+  newName: {{.ImageRepository}}quay.io/k8scsi/csi-resizer
+- name: quay.io/k8scsi/csi-snapshotter
+  newName: IMAGE_REPOSITORYquay.io/k8scsi/csi-snapshotter
+- name: quay.io/k8scsi/snapshot-controller
+  newName: {{.ImageRepository}}quay.io/k8scsi/snapshot-controller
+
